@@ -1,0 +1,1 @@
+Toy{id=2, toyName='Машинка', quantity=2, dropFrequency=51}
