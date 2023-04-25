@@ -1,5 +1,4 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -10,7 +9,6 @@ public class Main {
         addNewToyToQueue(ToysToWinQueue, 2, "Машинка", 2);
         addNewToyToQueue(ToysToWinQueue, 3, "Кукла", 1);
         giveOutAToy(ToysToWinQueue);
-        System.out.println(ToysToWinQueue);
     }
 
     public static Comparator<Toy> dropFrequencyComparator = new Comparator<Toy>() {
@@ -27,15 +25,21 @@ public class Main {
     }
 
     private static void giveOutAToy(Queue<Toy> ToysToWinQueue) {
+        File file = new File("C:\\Users\\polsk\\Desktop\\Git\\toyLottery\\resources\\Toys.txt");
+        FileWriter fr = null;
+        String text = ToysToWinQueue.poll().toString();
         try {
-            FileWriter fw = new FileWriter("C:\\Users\\polsk\\Desktop\\Git\\toyLottery\\resources\\Toys.txt");
-            String text = ToysToWinQueue.poll().toString();
-            fw.append(text);
-            fw.append('\n');
-
-            fw.flush();
+            fr = new FileWriter(file, true);
+            fr.write(text);
+            fr.write('\n');
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
